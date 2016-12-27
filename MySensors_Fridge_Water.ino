@@ -97,7 +97,7 @@ MyMessage msgFC(CHILD_ID_Freezer_Door, V_TRIPPED);
 MyMessage msgRelay1(CHILD_ID_Relay_1, V_LIGHT);
 MyMessage msgRelay2(CHILD_ID_Relay_2, V_LIGHT);
 MyMessage msgWater(CHILD_ID_Water, V_STATUS);
-MyMessage msgWaterLevel(CHILD_ID_Water, V_VOLTAGE);
+MyMessage msgWaterLevel(CHILD_ID_Water, V_FLOW);
 
 Bounce Debounce_LRC = Bounce();  // create instance of debounced button
 Bounce Debounce_RRC = Bounce();  // create instance of debounced button
@@ -179,7 +179,7 @@ void presentation()
   present(CHILD_ID_Relay_1, S_BINARY);      // Register Motor doors
   present(CHILD_ID_Relay_2, S_BINARY);      // Register Motor doors  
   present(CHILD_ID_Water, S_BINARY);
-  present(CHILD_ID_WaterLevel, S_MULTIMETER);
+  present(CHILD_ID_WaterLevel, S_WATER);
   metric = getConfig().isMetric;          // get configuration from the controller on UNIT system
 
 }
@@ -239,7 +239,8 @@ void loop()
   ReadTemp(); 
   int WaterLevelReading = ReadWater(Water_Sensor);
   send(msgWaterLevel.set(WaterLevelReading));
-  wait(1000);
+  Serial.println(WaterLevelReading);
+  wait(3000);
 } 
 
 
